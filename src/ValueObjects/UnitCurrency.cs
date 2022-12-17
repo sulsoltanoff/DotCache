@@ -10,13 +10,13 @@ namespace DotCache.ValueObjects;
 /// A unit of currency.
 /// This class represents a unit of currency such as the British Pound, Euro, US Dollar and etc.
 /// </summary>
-public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
+public readonly struct UnitCurrency : IEquatable<UnitCurrency>
 {
-    private string _code { get; }
-    private ushort _numericCode { get; }
-    private ushort _decimalPlaces { get; }
-    
-    private static readonly Regex CodePatt = CodePattern();
+    private string Code { get; }
+    private ushort NumericCode { get; }
+    private ushort DecimalPlaces { get; }
+
+    private static readonly Regex CodePatt = new("[A-Z][A-Z][A-Z]");
 
     private static readonly ConcurrentDictionary<string, UnitCurrency> CurrenciesByCode = new();
 
@@ -36,9 +36,9 @@ public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
 
     public UnitCurrency(string code, ushort numericCode, ushort decimalPlaces)
     {
-        _code = code;
-        _numericCode = numericCode;
-        _decimalPlaces = decimalPlaces;
+        Code = code;
+        NumericCode = numericCode;
+        DecimalPlaces = decimalPlaces;
     }
 
     public static UnitCurrency Of([NotNull] string currencyCode)
@@ -56,6 +56,12 @@ public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
         UnitCurrency currency = CurrenciesByCountry[locale.DisplayName];
         if (currency == null) throw new CurrencyException($"No currency found for locale '{locale}'");
         return currency;
+    }
+
+    public static UnitCurrency CurrencyRegister(string currencyCode, int numericCode, int decimalPlace)
+    {
+        List<String> countryCodes = new();
+        return CurrencyRegister(currencyCode, numericCode, decimalPlace, countryCodes);
     }
 
     public static UnitCurrency CurrencyRegister(
@@ -107,7 +113,7 @@ public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
         return new List<string>(CurrenciesByCountry.Keys);
     }
 
-    public bool Equals(UnitCurrency other) => this._code == other._code;
+    public bool Equals(UnitCurrency other) => this.Code == other.Code;
     
 
     public override bool Equals(object obj)
@@ -117,7 +123,7 @@ public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
 
     public override int GetHashCode()
     {
-        return _code.GetHashCode();
+        return Code.GetHashCode();
     }
 
     public static bool operator ==(UnitCurrency left, UnitCurrency right)
@@ -130,8 +136,5 @@ public readonly partial struct UnitCurrency : IEquatable<UnitCurrency>
         return !(left == right);
     }
 
-    public override string ToString() => this._code;
-
-    [GeneratedRegex("[A-Z][A-Z][A-Z]")]
-    private static partial Regex CodePattern();
+    public override string ToString() => this.Code;
 }
