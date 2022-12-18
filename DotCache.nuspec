@@ -16,7 +16,7 @@
             <packageType name="Dependency" />
         </packageTypes>
         <tags>DotCache Money Currency Cache Finance</tags>
-        <icon>./icons.png</icon>
+        <icon>./content/icons.png</icon>
         <readme>Readme.md</readme>
     </metadata>
     <files>
