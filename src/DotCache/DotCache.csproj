@@ -16,6 +16,7 @@
         <PackageIcon>icons.png</PackageIcon>
         <RepositoryUrl>https://github.com/sulsoltanoff/DotCache</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

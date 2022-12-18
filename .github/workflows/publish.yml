@@ -20,4 +20,4 @@ jobs:
         run: nuget pack DotCache.nuspec -NoDefaultExcludes
 
       - name: Publish to nuget.org
-        run: nuget push DotCache.*.nupkg -src https://api.nuget.org/v3/index.json ${{secrets.NUGET_API_KEY}}
+        run: nuget push Corpspace.Finance.DotCache.*.nupkg -src https://api.nuget.org/v3/index.json ${{secrets.NUGET_API_KEY}}
