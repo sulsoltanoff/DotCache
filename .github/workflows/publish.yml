@@ -16,7 +16,7 @@ jobs:
         with:
           nuget-version: '5.x'
 
-      - name: Package the template
+      - name: Package the lib
         run: nuget pack DotCache.nuspec -NoDefaultExcludes
 
       - name: Publish to nuget.org
